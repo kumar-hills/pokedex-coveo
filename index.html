@@ -19,12 +19,10 @@
     </header>
 
     <!--
-      search-hub identifies this page to Coveo: query pipelines are routed on
-      it and usage analytics are grouped by it.
-      fields-to-include lists the custom index fields the result templates need.
+      fields-to-include lists the custom index fields the result template needs.
+      The search hub is set from src/config.js in src/main.js.
     -->
     <atomic-search-interface
-      search-hub="PokemonSearch"
       fields-to-include='["pokemonimage", "pokemontype", "pokemongeneration"]'
     >
       <atomic-search-layout>
@@ -37,12 +35,12 @@
 
         <atomic-layout-section section="facets">
           <atomic-facet-manager>
-            <!-- Every value is listed, so the facets' own search boxes are turned off in main.js. -->
             <atomic-facet
               field="pokemontype"
               label="Type"
               number-of-values="18"
               sort-criteria="alphanumeric"
+              data-lists-all-values
             ></atomic-facet>
             <!-- Natural sort keeps "Generation 10" after "Generation 9". -->
             <atomic-facet
@@ -50,7 +48,9 @@
               label="Generation"
               number-of-values="12"
               sort-criteria="alphanumericNatural"
+              data-lists-all-values
             ></atomic-facet>
+            <atomic-facet field="pokemonabilities" label="Ability"></atomic-facet>
           </atomic-facet-manager>
         </atomic-layout-section>
 
@@ -58,12 +58,36 @@
           <atomic-layout-section section="status">
             <atomic-breadbox></atomic-breadbox>
             <atomic-query-summary></atomic-query-summary>
+            <atomic-sort-dropdown>
+              <atomic-sort-expression
+                label="Relevance"
+                expression="relevancy"
+              ></atomic-sort-expression>
+              <atomic-sort-expression
+                label="Pokédex number"
+                expression="pokemonnumber ascending"
+              ></atomic-sort-expression>
+              <atomic-sort-expression
+                label="Name (A to Z)"
+                expression="pokemonname ascending"
+              ></atomic-sort-expression>
+              <atomic-sort-expression
+                label="Base stats (highest first)"
+                expression="pokemontotal descending"
+              ></atomic-sort-expression>
+            </atomic-sort-dropdown>
             <atomic-did-you-mean></atomic-did-you-mean>
           </atomic-layout-section>
 
           <atomic-layout-section section="results">
             <atomic-result-list display="grid" image-size="large">
               <atomic-result-template>
+                <!-- In a grid, a click anywhere on the card follows this link. -->
+                <template slot="link">
+                  <atomic-result-link
+                    href-template="${pokemonDetailPage}?id=${raw.permanentid}"
+                  ></atomic-result-link>
+                </template>
                 <template>
                   <atomic-result-section-visual>
                     <atomic-result-image
@@ -72,10 +96,13 @@
                     ></atomic-result-image>
                   </atomic-result-section-visual>
                   <atomic-result-section-title>
-                    <atomic-result-link>
-                      <a slot="attributes" target="_blank" rel="noopener"></a>
-                      <pokemon-name></pokemon-name>
-                    </atomic-result-link>
+                    <!--
+                      Opens this app's detail page; the link still logs the click to Coveo.
+                      pokemonDetailPage is set on window in src/main.js.
+                    -->
+                    <atomic-result-link
+                      href-template="${pokemonDetailPage}?id=${raw.permanentid}"
+                    ></atomic-result-link>
                   </atomic-result-section-title>
                   <atomic-result-section-bottom-metadata>
                     <pokemon-types></pokemon-types>

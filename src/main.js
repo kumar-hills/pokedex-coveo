@@ -9,13 +9,21 @@ defineCustomElements();
 const searchInterface = document.querySelector('atomic-search-interface');
 await customElements.whenDefined('atomic-search-interface');
 
-// Both facets list all of their values, so a search box inside them adds
-// nothing. It is on by default, and Atomic deprecates with-search="false" in
-// markup, so the property is set here instead.
+// The Type and Generation facets list all of their values, so a search box
+// inside them adds nothing. It is on by default, and Atomic deprecates
+// with-search="false" in markup, so the property is set here instead.
 await customElements.whenDefined('atomic-facet');
-for (const facet of document.querySelectorAll('atomic-facet')) {
+for (const facet of document.querySelectorAll('atomic-facet[data-lists-all-values]')) {
   facet.withSearch = false;
 }
+
+searchInterface.searchHub = coveoConfig.searchHub;
+
+// Result links open this app's detail page. Atomic discards link URLs that are
+// neither absolute nor root-relative, and an href-template can read values
+// from `window`, so the page's absolute URL is published here. Resolving it
+// against the current page keeps links right under any hosting path.
+window.pokemonDetailPage = new URL('pokemon.html', document.baseURI).href;
 
 await searchInterface.initialize({
   organizationId: coveoConfig.organizationId,

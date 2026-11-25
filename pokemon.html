@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <title>Pokédex Search</title>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <h1>Pokédex Search</h1>
+      </div>
+      <a class="powered-by" href="https://www.coveo.com" target="_blank" rel="noopener">
+        <span>Powered by</span>
+        <img src="/coveo-logo.svg" alt="Coveo" width="87" height="22" />
+      </a>
+    </header>
+
+    <main class="detail">
+      <a class="back-link" id="back-link" href="./">← Back to search</a>
+
+      <p class="detail-status" id="status" role="status">Loading…</p>
+
+      <article class="pokemon-card" id="pokemon" hidden>
+        <div class="pokemon-art">
+          <img id="pokemon-image" alt="" />
+        </div>
+
+        <div class="pokemon-info">
+          <p class="pokemon-number" id="pokemon-number"></p>
+          <h2 class="pokemon-name" id="pokemon-name"></h2>
+          <p class="pokemon-species" id="pokemon-species"></p>
+          <div id="pokemon-types"></div>
+
+          <blockquote class="pokemon-entry" id="pokemon-entry"></blockquote>
+
+          <dl class="pokemon-facts" id="pokemon-facts"></dl>
+
+          <a class="source-link" id="source-link" target="_blank" rel="noopener">
+            Full entry on pokemondb.net
+          </a>
+        </div>
+      </article>
+    </main>
+
+    <script type="module" src="/src/pokemon.js"></script>
+  </body>
+</html>

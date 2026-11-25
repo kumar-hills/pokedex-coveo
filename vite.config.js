@@ -32,4 +32,13 @@ export default defineConfig({
   server: {
     open: true,
   },
+  build: {
+    // Two pages: the search page and the Pokémon detail page.
+    rolldownOptions: {
+      input: {
+        search: resolve('index.html'),
+        pokemon: resolve('pokemon.html'),
+      },
+    },
+  },
 });
