@@ -6,6 +6,8 @@ the Coveo platform: a search page made with
 page made with [Headless](https://docs.coveo.com/en/headless/latest/), bundled
 with [Vite](https://vite.dev/).
 
+**Live demo:** https://kumar-hills.github.io/pokedex-coveo/
+
 ## What it does
 
 - Searches 1,028 Pokémon pages indexed in a Coveo organization
@@ -28,6 +30,12 @@ npm run dev      # dev server on http://localhost:5173
 npm run build    # production build in dist/
 npm run preview  # serve the production build
 ```
+
+## Hosting
+
+Every push to `main` runs `.github/workflows/deploy.yml`, which builds the app
+and publishes `dist/` to GitHub Pages. The build uses relative asset URLs, so
+it runs under the `/pokedex-coveo/` path Pages serves it from.
 
 ## How it is put together
 
