@@ -27,7 +27,11 @@
     >
       <atomic-search-layout>
         <atomic-layout-section section="search">
-          <atomic-search-box>
+          <!--
+            Suggestions slower than the default 400 ms are dropped, which happened
+            in testing. One second keeps them without a noticeable lag.
+          -->
+          <atomic-search-box suggestion-timeout="1000">
             <atomic-search-box-recent-queries></atomic-search-box-recent-queries>
             <atomic-search-box-query-suggestions></atomic-search-box-query-suggestions>
           </atomic-search-box>
@@ -55,6 +59,8 @@
         </atomic-layout-section>
 
         <atomic-layout-section section="main">
+          <!-- Shown only when the pipeline's RGA model generates an answer for the query. -->
+          <atomic-generated-answer></atomic-generated-answer>
           <atomic-layout-section section="status">
             <atomic-breadbox></atomic-breadbox>
             <atomic-query-summary></atomic-query-summary>
