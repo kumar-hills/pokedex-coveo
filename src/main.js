@@ -19,11 +19,21 @@ for (const facet of document.querySelectorAll('atomic-facet[data-lists-all-value
 
 searchInterface.searchHub = coveoConfig.searchHub;
 
-// Result links open this app's detail page. Atomic discards link URLs that are
-// neither absolute nor root-relative, and an href-template can read values
-// from `window`, so the page's absolute URL is published here. Resolving it
-// against the current page keeps links right under any hosting path.
-window.pokemonDetailPage = new URL('pokemon.html', document.baseURI).href;
+// Atomic discards link and image URLs that are neither absolute nor
+// root-relative, and the app may be hosted under a sub-path. Both URLs below
+// are therefore resolved against the current page into absolute ones.
+const fromThisPage = (path) => new URL(path, document.baseURI).href;
+
+// Result links open this app's detail page. An href-template can read values
+// from `window`, so the page's URL is published there.
+window.pokemonDetailPage = fromThisPage('pokemon.html');
+
+// Image shown when a Pokémon's artwork is missing or fails to load.
+for (const template of document.querySelectorAll('atomic-result-template template')) {
+  for (const image of template.content.querySelectorAll('atomic-result-image')) {
+    image.setAttribute('fallback', fromThisPage('placeholder.svg'));
+  }
+}
 
 await searchInterface.initialize({
   organizationId: coveoConfig.organizationId,

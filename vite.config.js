@@ -29,6 +29,9 @@ for (const name of ['lang', 'assets']) {
 }
 
 export default defineConfig({
+  // Relative asset URLs, so the build works at a domain root and under a
+  // sub-path such as GitHub Pages' /<repository>/.
+  base: './',
   server: {
     open: true,
   },
