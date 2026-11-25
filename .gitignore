@@ -1,0 +1,9 @@
+node_modules/
+dist/
+
+# Copied from @coveo/atomic by vite.config.js on every dev/build run.
+public/lang/
+public/assets/
+
+.DS_Store
+*.local
