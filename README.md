@@ -9,6 +9,9 @@ with [Vite](https://vite.dev/).
 ## What it does
 
 - Searches 1,028 Pokémon pages indexed in a Coveo organization
+- Answers questions with an AI-generated answer and its source citations
+  (Coveo Relevance Generative Answering)
+- Suggests Pokémon names as you type
 - Filters by **Type**, **Generation** and **Ability**
 - Sorts by relevance, Pokédex number, name or base stat total
 - Shows each Pokémon's artwork, name, types and generation in the results
@@ -102,6 +105,22 @@ Both pages send the search hub `PokemonSearch`. A query pipeline named
 `Pokemon` has the condition "Search Hub is PokemonSearch", so every query from
 this app is routed to it. Machine learning models are associated with that
 pipeline.
+
+### Machine learning models
+
+All four models are built from the `pokemon-db` source and associated with the
+`Pokemon` pipeline.
+
+| Model | Role | Association condition |
+| --- | --- | --- |
+| Query Suggestions | Type-ahead in the search box | none |
+| Semantic Encoder | Vector retrieval, required by the two models below | none |
+| Relevance Generative Answering | The generated answer above the results | Query is not empty |
+| Passage Retrieval | Passages for the Passage Retrieval API | none |
+
+The RGA condition must use the **Is not empty** operator. Built as "Query is"
+with the value "not empty", it reads the same in the console but only matches
+a search for those two words, and no answer is ever generated.
 
 ### Query Suggestions
 
