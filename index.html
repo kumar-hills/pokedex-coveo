@@ -59,8 +59,17 @@
         </atomic-layout-section>
 
         <atomic-layout-section section="main">
-          <!-- Shown only when the pipeline's RGA model generates an answer for the query. -->
-          <atomic-generated-answer></atomic-generated-answer>
+          <!--
+            RGA answers only from what the retrieved pages say. When they do not
+            contain an answer (for example a comparison across all Pokémon), it
+            declines, and this message is shown instead of leaving a gap.
+          -->
+          <atomic-generated-answer>
+            <p slot="no-answer-message">
+              The Pokédex pages don't contain an answer to this. Try asking about a specific
+              Pokémon, or use <strong>Sort by</strong> to rank them, for example by base stats.
+            </p>
+          </atomic-generated-answer>
           <atomic-layout-section section="status">
             <atomic-breadbox></atomic-breadbox>
             <atomic-query-summary></atomic-query-summary>
