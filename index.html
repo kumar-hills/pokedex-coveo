@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <title>Pokédex Search</title>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <h1>Pokédex Search</h1>
+      </div>
+      <a class="powered-by" href="https://www.coveo.com" target="_blank" rel="noopener">
+        <span>Powered by</span>
+        <img src="/coveo-logo.svg" alt="Coveo" width="87" height="22" />
+      </a>
+    </header>
+
+    <!--
+      search-hub identifies this page to Coveo: query pipelines are routed on
+      it and usage analytics are grouped by it.
+      fields-to-include lists the custom index fields the result templates need.
+    -->
+    <atomic-search-interface
+      search-hub="PokemonSearch"
+      fields-to-include='["pokemonimage", "pokemontype", "pokemongeneration"]'
+    >
+      <atomic-search-layout>
+        <atomic-layout-section section="search">
+          <atomic-search-box>
+            <atomic-search-box-recent-queries></atomic-search-box-recent-queries>
+            <atomic-search-box-query-suggestions></atomic-search-box-query-suggestions>
+          </atomic-search-box>
+        </atomic-layout-section>
+
+        <atomic-layout-section section="facets">
+          <atomic-facet-manager>
+            <!-- Every value is listed, so the facets' own search boxes are turned off in main.js. -->
+            <atomic-facet
+              field="pokemontype"
+              label="Type"
+              number-of-values="18"
+              sort-criteria="alphanumeric"
+            ></atomic-facet>
+            <!-- Natural sort keeps "Generation 10" after "Generation 9". -->
+            <atomic-facet
+              field="pokemongeneration"
+              label="Generation"
+              number-of-values="12"
+              sort-criteria="alphanumericNatural"
+            ></atomic-facet>
+          </atomic-facet-manager>
+        </atomic-layout-section>
+
+        <atomic-layout-section section="main">
+          <atomic-layout-section section="status">
+            <atomic-breadbox></atomic-breadbox>
+            <atomic-query-summary></atomic-query-summary>
+            <atomic-did-you-mean></atomic-did-you-mean>
+          </atomic-layout-section>
+
+          <atomic-layout-section section="results">
+            <atomic-result-list display="grid" image-size="large">
+              <atomic-result-template>
+                <template>
+                  <atomic-result-section-visual>
+                    <atomic-result-image
+                      field="pokemonimage"
+                      fallback="/placeholder.svg"
+                    ></atomic-result-image>
+                  </atomic-result-section-visual>
+                  <atomic-result-section-title>
+                    <atomic-result-link>
+                      <a slot="attributes" target="_blank" rel="noopener"></a>
+                      <pokemon-name></pokemon-name>
+                    </atomic-result-link>
+                  </atomic-result-section-title>
+                  <atomic-result-section-bottom-metadata>
+                    <pokemon-types></pokemon-types>
+                    <atomic-result-text field="pokemongeneration"></atomic-result-text>
+                  </atomic-result-section-bottom-metadata>
+                </template>
+              </atomic-result-template>
+            </atomic-result-list>
+            <atomic-query-error></atomic-query-error>
+            <atomic-no-results></atomic-no-results>
+          </atomic-layout-section>
+
+          <atomic-layout-section section="pagination">
+            <atomic-pager></atomic-pager>
+            <atomic-results-per-page choices-displayed="24,48,96"></atomic-results-per-page>
+          </atomic-layout-section>
+        </atomic-layout-section>
+      </atomic-search-layout>
+    </atomic-search-interface>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

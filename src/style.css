@@ -1,0 +1,67 @@
+/*
+ * Page chrome only. Everything inside <atomic-search-interface> is styled by
+ * Atomic's theme, tuned here through its CSS variables.
+ */
+:root {
+  --app-surface: #ffffff;
+  --app-border: #e4e8ec;
+  --app-text: #1c1c28;
+  --app-muted: #5d6676;
+  --app-font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Atomic theme: a Poké Ball red as the accent colour. */
+  --atomic-primary: #d6303b;
+  --atomic-primary-light: #e4545d;
+  --atomic-primary-dark: #a8202a;
+  --atomic-ring-primary: rgba(214, 48, 59, 0.4);
+  --atomic-font-family: var(--app-font);
+}
+
+body {
+  margin: 0;
+  background: #f6f7f9;
+  color: var(--app-text);
+  font-family: var(--app-font);
+}
+
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding: 0.9rem 1.5rem;
+  background: var(--app-surface);
+  border-bottom: 1px solid var(--app-border);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.powered-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--app-muted);
+  font-size: 0.8125rem;
+  text-decoration: none;
+}
+
+.powered-by img {
+  display: block;
+  height: 22px;
+  width: auto;
+}
+
+atomic-search-interface {
+  display: block;
+  padding: 1.5rem 1.5rem 3rem;
+}
+
+/* The artwork is drawn on white, so keep it whole rather than cropped. */
+atomic-result-image::part(result-image),
+atomic-result-image img {
+  object-fit: contain;
+}
