@@ -1,0 +1,31 @@
+[
+  {
+    "name": "pokemon-pages",
+    "for": { "urls": ["^https://pokemondb\\.net/pokedex/[a-z0-9-]+$"] },
+    "exclude": [
+      { "type": "CSS", "path": "header" },
+      { "type": "CSS", "path": "nav" },
+      { "type": "CSS", "path": "footer" },
+      { "type": "CSS", "path": "ul.list-nav" },
+      { "type": "CSS", "path": "div.tabset-moves-game" },
+      { "type": "CSS", "path": "table.sprites-table" },
+      { "type": "CSS", "path": "span.igame" },
+      { "type": "XPATH", "path": "//table[@class='vitals-table']//tr[starts-with(normalize-space(th),'Local')]" },
+      { "type": "XPATH", "path": "//div[@id='dex-locations']/following-sibling::div[1]" },
+      { "type": "XPATH", "path": "//div[@id='dex-lang']/following-sibling::div[1]//table" }
+    ],
+    "metadata": {
+      "pokemontype": { "type": "XPATH", "path": "(//table[@class='vitals-table'])[1]//a[contains(@class,'type-icon')]/text()" },
+      "pokemongeneration": { "type": "XPATH", "path": "(//p[contains(.,'introduced in')])[1]/abbr/text()" },
+      "pokemonimage": { "type": "XPATH", "path": "//meta[@property='og:image']/@content" },
+      "pokemonname": { "type": "XPATH", "path": "(//main//h1)[1]/text()" },
+      "pokemonnumber": { "type": "XPATH", "path": "(//table[@class='vitals-table'])[1]//tr[1]/td/strong/text()" },
+      "pokemonspecies": { "type": "XPATH", "path": "(//table[@class='vitals-table'])[1]//tr[th='Species']/td/text()" },
+      "pokemonheight": { "type": "XPATH", "path": "(//table[@class='vitals-table'])[1]//tr[th='Height']/td/text()" },
+      "pokemonweight": { "type": "XPATH", "path": "(//table[@class='vitals-table'])[1]//tr[th='Weight']/td/text()" },
+      "pokemonabilities": { "type": "XPATH", "path": "(//table[@class='vitals-table'])[1]//tr[th='Abilities']/td//a/text()" },
+      "pokemontotal": { "type": "XPATH", "path": "(//td[contains(@class,'cell-total')])[1]/text()" },
+      "pokemonentry": { "type": "XPATH", "path": "(//td[@class='cell-med-text'])[1]/text()" }
+    }
+  }
+]
