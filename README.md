@@ -130,6 +130,36 @@ The RGA condition must use the **Is not empty** operator. Built as "Query is"
 with the value "not empty", it reads the same in the console but only matches
 a search for those two words, and no answer is ever generated.
 
+### How results are retrieved
+
+A query is matched in two ways, and the matches are ranked together:
+
+1. **Keyword matching.** The index returns pages that contain every word of the
+   query. Words are stemmed, so "destroyer" also matches "destroy".
+2. **Semantic matching.** The Semantic Encoder compares the meaning of the
+   query with the meaning of each page's title and text, and adds pages that
+   are close in meaning even when they share no word with the query.
+
+"universe destroyer" shows both at work. No page contains both words, so
+keyword matching alone finds nothing: the same query on a pipeline without
+models returns 0 results. Through the `Pokemon` pipeline it returns 78. The top
+three each contain one of the two words (Cosmoem mentions "universe";
+Annihilape and Gyarados mention "destroy"). The ones below, such as Spiritomb
+and Darkrai, contain neither and are there for their meaning alone.
+
+This is also why a result count can look high for a simple query: the count
+includes the semantic matches.
+
+### When an answer is generated
+
+The RGA model reads passages from the top results and writes an answer only
+when those passages contain one. It does not compare all 1,028 pages. A
+question such as "which is the strongest pokemon" asks for a ranking that no
+single page states (the data is in the `pokemontotal` field), so the model
+declines and the page says so, pointing to the sort options. Asking about one
+Pokémon, or about something a Pokédex entry describes, gets an answer with its
+source cited.
+
 ### Query Suggestions
 
 [`coveo/query-suggest-default-queries.csv`](coveo/query-suggest-default-queries.csv)
